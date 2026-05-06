@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:slot_machine/slot_row.dart';
+import 'sound_service.dart';
 
 class SlotMachine extends StatefulWidget {
   const SlotMachine({super.key});
@@ -13,10 +14,38 @@ class SlotMachine extends StatefulWidget {
 class _SlotMachineState
     extends State<SlotMachine> {
   @override
+  var _isMuted = false;
+  var _backgroundStarted = false;
+  void _toggleMute() {
+    SoundService.toggleMute();
+    setState(() {
+      _isMuted = SoundService.isMuted;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+      children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: Padding(
+            padding: EdgeInsets.only(
+              right: 16,
+              top: 8,
+            ),
+            child: IconButton(
+              onPressed: _toggleMute,
+              icon: Icon(
+                _isMuted
+                    ? Icons.volume_off
+                    : Icons.volume_up,
+                color: Colors.white,
+                size: 28,
+              ),
+            ),
+          ),
+        ),
         Text(
           'Монеты: $_coins',
           style: TextStyle(
@@ -147,10 +176,15 @@ class _SlotMachineState
 
   Future<void> _spin() async {
     if (_coins <= 0 || _isSpinning) return;
+    SoundService.playClick();
     setState(() {
       _isSpinning = true;
       _message = 'Монеты закончились';
     });
+    if (!_backgroundStarted){
+      SoundService.playBackground();
+      _backgroundStarted = true;
+    }
     final result1 = await _spinReel(
       totalTicks: 10,
       onTick: (val) =>
@@ -178,15 +212,24 @@ class _SlotMachineState
             'assets/images/seven.png') {
           _coins += 10;
           _message = 'Джекпот! +10 монет';
+          SoundService.playJackpot();
         } else {
           _coins += 3;
           _message = 'Победа! +3 монеты';
+          SoundService.playJackpot();
         }
       } else {
         _coins -= 1;
         _message =
             'Попробуй еще раз, лошара. -1 монета';
+        SoundService.playLose();
       }
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SoundService.playBackground();
   }
 }
