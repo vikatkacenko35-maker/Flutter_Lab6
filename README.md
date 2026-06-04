@@ -1,17 +1,38 @@
-# slot_machine
+# Лабораторная работа №6 - Flutter: StatefulWidget и управление состоянием
 
-A new Flutter project.
+## Информация об авторе
+- **Фамилия, имя:** Ткаченко Виктория
+- **Группа:** ИСП-231
+- **Дата сдачи:** 2026
 
-## Getting Started
+## Что изучили в ходе работы
+- Создание StatefulWidget для управления изменяемым состоянием приложения
+- Работу с генерацией случайных чисел через dart:math
+- Добавление и регистрацию изображений в assets через pubspec.yaml
+- Логику игрового автомата: проверку выигрышных комбинаций, подсчёт монет
+- Блокировку кнопок при определённых условиях (недостаточно монет)
+- Анимацию вращения барабанов с разными фазами скорости
+- Вынос повторяющихся виджетов в отдельные классы для переиспользования
 
-This project is a starting point for a Flutter application.
+## Скриншот финального приложения
+![Слот-машина](img/step4_tkachenko.png)
 
-A few resources to get you started if this is your first Flutter project:
+---
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+##  Инструкция по запуску
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. **Клонировать репозиторий:**
+   ```bash
+   git clone https://github.com/vikatkacenko35_marker/Flutter_Lab5.git
+   cd Flutter_Lab3
+   ```
+Установить зависимости:
+
+```bash
+flutter pub get
+```
+Запустить в Chrome:
+
+```bash
+flutter run -d chrome
+```
